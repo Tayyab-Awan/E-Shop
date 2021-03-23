@@ -1,7 +1,9 @@
 main {
   min-height: 80vh;
 }
-
+small {
+  display: block;
+}
 .card-product-name {
   overflow: hidden;
   text-overflow: ellipsis;
