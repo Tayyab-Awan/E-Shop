@@ -19,7 +19,7 @@ const CartScreen = ({ match, location, history }) => {
     }, [dispatch, productId, qty])
 
     const checkoutHandler = () => {
-        console.log('checkout')
+        history.push('/login?redirect=/shipping')
     }
 
     return (
