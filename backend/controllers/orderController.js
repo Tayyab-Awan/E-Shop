@@ -8,7 +8,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const {
         orderItems,
         shippingAddress,
-        paymentMehod,
+        paymentMethod,
         itemsPrice,
         taxPrice,
         shippingPrice,
@@ -17,15 +17,14 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     if (orderItems && orderItems.legnth === 0) {
         res.status(400);
-        throw new Error('No order items found')
-        return;
+        throw new Error('No order items found');
     }
 
     const order = new Order({
-        orderItems,
+        items: orderItems,
         user: req.user._id,
         shippingAddress,
-        paymentMehod,
+        paymentMethod,
         itemsPrice,
         taxPrice,
         shippingPrice,
@@ -38,4 +37,18 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
 })
 
-export { addOrderItems }
+// @desc    Get order by id
+// @route   GET /api/orders
+// @access  Private
+const getOrderById = asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id).populate('user', 'name email');
+
+    if (order)
+        res.json(order);
+    else {
+        res.status(404);
+        throw new Error('Order not found!');
+    }
+})
+
+export { addOrderItems, getOrderById }

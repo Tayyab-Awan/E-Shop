@@ -7,7 +7,7 @@ import {
     userLoginReducer, userRegisterReducer,
     getUserProfileReducer, updateUserProfileReducer
 } from './reducers/userReducers';
-import { placeOrderReducer } from './reducers/orderReducer'
+import { placeOrderReducer, orderDetailsReducer } from './reducers/orderReducers'
 
 const reducer = combineReducers({
     productList: productListReducer,
@@ -17,12 +17,9 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userProfile: getUserProfileReducer,
     updatedProfile: updateUserProfileReducer,
-    placedOrder: placeOrderReducer
+    placedOrder: placeOrderReducer,
+    orderDetails: orderDetailsReducer,
 });
-
-const placedOrderFromStorage = localStorage.getItem('order')
-    ? JSON.parse(localStorage.getItem('order'))
-    : {}
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
     ? JSON.parse(localStorage.getItem('cartItems'))
@@ -47,7 +44,6 @@ const initialState = {
         paymentMethod: paymentMethodFromStorage
     },
     userLogin: { userInfo: userInfoFromStorage },
-    placedOrder: placedOrderFromStorage
 };
 
 const middleware = [thunk];

@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { saveShippingAddress } from '../actions/cartActions';
+import { Button, Row, Col, ListGroup, Image } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { placeOrder } from '../actions/orderAction';
 import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
 
-const PlaceOrderScreen = () => {
+const PlaceOrderScreen = ({ history }) => {
+    const dispatch = useDispatch();
     const cart = useSelector(state => state.cart)
 
     // Calculate Prices
@@ -22,8 +23,26 @@ const PlaceOrderScreen = () => {
         Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
     );
 
+    const { order, success, error } = useSelector(state => state.placedOrder)
+
+    useEffect(() => {
+        if (success)
+            history.push(`/order/${order._id}`)
+        // eslint-disable-next-line
+    }, [history, success])
+
     const placeOrderHandler = () => {
-        console.log('place order')
+        dispatch(
+            placeOrder({
+                shippingAddress: cart.shippingAddress,
+                paymentMethod: cart.paymentMethod,
+                orderItems: cart.cartItems,
+                itemsPrice: cart.itemsPrice,
+                shippingPrice: cart.shippingPrice,
+                taxPrice: Number(cart.taxPrice),
+                totalPrice: Number(cart.totalPrice),
+            })
+        )
     }
 
     return (
@@ -45,7 +64,6 @@ const PlaceOrderScreen = () => {
                             <h2>Payment Method</h2>
                             <strong>Method: </strong>
                             {cart.paymentMethod}
-                            {console.log(cart.paymentMethod)}
                         </ListGroup.Item>
 
                         <ListGroup.Item>
@@ -55,8 +73,8 @@ const PlaceOrderScreen = () => {
                                     ? <Message children='Your cart is empty' />
                                     : (
                                         <ListGroup variant='flush'>
-                                            {cart.cartItems.map(item => (
-                                                <ListGroup.Item key={Math.floor(Math.random * 100)}>
+                                            {cart.cartItems.map((item, index) => (
+                                                <ListGroup.Item key={index}>
                                                     <Row>
                                                         <Col md={2}>
                                                             <Image
@@ -110,6 +128,9 @@ const PlaceOrderScreen = () => {
                                 <Col>Total</Col>
                                 <Col>${cart.totalPrice}</Col>
                             </Row>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            {error && <Message variant='danger' children={error} />}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Button
