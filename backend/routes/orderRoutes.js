@@ -3,11 +3,13 @@ const router = express.Router();
 import {
     addOrderItems,
     getOrderById,
-    updateOrderToPaid
+    updateOrderToPaid,
+    getMyOrders
 } from '../controllers/orderController.js';
 import { protect } from '../middleware/authMiddlerware.js'
 
 router.route('/').post(protect, addOrderItems);
+router.route('/').get(protect, getMyOrders);
 router.route('/:id').get(protect, getOrderById);
 router.route('/:id/pay').put(protect, updateOrderToPaid);
 

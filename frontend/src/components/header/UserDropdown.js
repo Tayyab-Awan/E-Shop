@@ -3,9 +3,16 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { LinkContainer } from 'react-router-bootstrap';
 import { logout } from '../../actions/userActions';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const UserDropdown = ({ username }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        history.push('/');
+    }
 
     return (
         <NavDropdown title={`Hi, ${username}`} id="user-nav-dropdown">
@@ -15,14 +22,14 @@ const UserDropdown = ({ username }) => {
                     <span className="mx-2">Profile</span>
                 </NavDropdown.Item>
             </LinkContainer>
-            <LinkContainer to='/orders'>
+            <LinkContainer to='/orders/myorders'>
                 <NavDropdown.Item>
                     <i className="fas fa-book"></i>
                     <span className="mx-2">Orders</span>
                 </NavDropdown.Item>
             </LinkContainer>
             <NavDropdown.Divider />
-            <NavDropdown.Item onClick={() => dispatch(logout())}>Logout</NavDropdown.Item>
+            <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
         </NavDropdown>
     )
 }
