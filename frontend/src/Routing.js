@@ -13,6 +13,7 @@ import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import MyOrders from './screens/MyOrders';
+import UserListScreen from './screens/UserListScreen';
 
 const Routing = () => {
     return (
@@ -29,6 +30,7 @@ const Routing = () => {
             <Route path="/orders/myorders" component={MyOrders} />
             <Route path="/order/:id" component={OrderScreen} />
             <Route exact path="/" component={HomeScreen} />
+            <Route exact path="/admin/users" component={UserListScreen} />
             <Footer />
         </Router>
     )

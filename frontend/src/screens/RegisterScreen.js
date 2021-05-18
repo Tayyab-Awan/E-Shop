@@ -37,7 +37,16 @@ const RegisterScreen = ({ history }) => {
     return (
         <FormContainer>
             <h1>Sign Up</h1>
-            { error ? <Message variant='danger' children={error} /> : null}
+            {console.log('error.length: ', error && error.length)}
+            {/* { error ? (
+                error.length > 0
+                    ? error.map(err => <Message variant="danger" children={err} />)
+                    : <Message variant="danger" children={error} />
+            ) 
+                : null}
+*/}
+            { error ? <Message variant="danger" children={error} /> : null}
+
             { message ? <Message variant='danger' children={message} /> : null}
             { loading ? <Loader /> : null}
             <Form onSubmit={(e) => submitHandler(e)}>
@@ -47,6 +56,7 @@ const RegisterScreen = ({ history }) => {
                         type='text'
                         placeholder='Name'
                         value={name}
+                        required
                         onChange={(e) => setName(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
@@ -57,6 +67,7 @@ const RegisterScreen = ({ history }) => {
                         type='text'
                         placeholder='Email'
                         value={email}
+                        required
                         onChange={(e) => setEmail(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
@@ -66,6 +77,7 @@ const RegisterScreen = ({ history }) => {
                     <Form.Control
                         type='password'
                         placeholder='Password'
+                        required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     ></Form.Control>
@@ -77,6 +89,7 @@ const RegisterScreen = ({ history }) => {
                         type='password'
                         placeholder='Confirm Password'
                         value={confirmPassword}
+                        required
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     ></Form.Control>
                 </Form.Group>

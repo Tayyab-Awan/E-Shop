@@ -12,7 +12,10 @@ import {
     USER_PROFILE_FETCH_FAIL,
     USER_PROFILE_UPDATE_REQUEST,
     USER_PROFILE_UPDATE_SUCCESS,
-    USER_PROFILE_UPDATE_FAIL
+    USER_PROFILE_UPDATE_FAIL,
+    USER_LIST_REQUEST,
+    USER_LIST_SUCCESS,
+    USER_LIST_FAIL
 } from "../constants/userConstants"
 
 export const login = (email, password) => async (dispatch) => {
@@ -69,7 +72,6 @@ export const register = (name, email, password) => async (dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        // fake endpoint for now
         const { data } = await axios.post(
             '/api/users',
             { name, email, password },
@@ -137,6 +139,7 @@ export const updateProfile = (userDetail) => async (dispatch, getState) => {
     try {
         const config = {
             headers: {
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${userInfo.token}`
             }
         }
@@ -159,6 +162,37 @@ export const updateProfile = (userDetail) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: USER_PROFILE_UPDATE_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        })
+    }
+
+}
+
+export const listUsers = () => async (dispatch, getState) => {
+    dispatch({
+        type: USER_LIST_REQUEST
+    })
+
+    const { userLogin: { userInfo } } = getState();
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        const { data } = await axios.get('/api/users', config);
+
+        dispatch({
+            type: USER_LIST_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: USER_LIST_FAIL,
             payload: error.response && error.response.data.message
                 ? error.response.data.message
                 : error.message
