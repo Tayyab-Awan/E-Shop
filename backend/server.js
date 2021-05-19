@@ -15,11 +15,14 @@ const app = express();
 const whitelist = ['http://localhost:4500'];
 const corsOptions = {
     origin: function (origin, callback) {
+        console.log('origin: ', origin);
+        console.log('whitelist.indexOf(origin): ', whitelist.indexOf(origin) !== -1)
+
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true)
         }
         else {
-            callback(new Error('No allowed by CORS'))
+            callback(new Error('Not allowed by CORS'))
         }
     }
 }
