@@ -33,7 +33,7 @@ const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === 'production') {
     app.use(
-        prerender.set("prerenderToken", 'PGmwF2emhlsOYtGIOMQy')
+        prerender.set("prerenderToken", 'AMbbwj64gVnFQT3RXgO4')
     );
     app.use(express.static(path.join(__dirname, '/frontend/build')))
     app.get('*', (req, res) => {
