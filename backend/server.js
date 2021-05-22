@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
+import prerender from 'prerender-node';
 import multer from 'multer';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productsRoutes.js';
@@ -32,7 +33,7 @@ const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === 'production') {
     app.use(
-        require("prerender-node").set("prerenderToken", 'wG9TS6WeZJ4RvG1i3TA8')
+        prerender.set("prerenderToken", 'PGmwF2emhlsOYtGIOMQy')
     );
     app.use(express.static(path.join(__dirname, '/frontend/build')))
     app.get('*', (req, res) => {
