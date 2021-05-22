@@ -6,6 +6,7 @@ import { detailProduct } from '../actions/productActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { Helmet } from 'react-helmet';
 
 const ProductDetail = ({ match, history }) => {
     const dispatch = useDispatch();
@@ -32,6 +33,11 @@ const ProductDetail = ({ match, history }) => {
                             <Message variant="danger" children={error} />
                             :
                             <Row className='py-5'>
+
+                                <Helmet>
+                                    <meta name="og:title" content="Product NTap" data-rh="true" />
+                                    <meta property="og:image" content={"https://i.ytimg.com/vi/qUdDKuxb7bc/maxresdefault.jpg"} data-rh="true" />
+                                </Helmet>
                                 <Col md={6}>
                                     <Image src={product.image} alt={product.name} fluid />
                                 </Col>

@@ -37,22 +37,29 @@ const productSchema = mongoose.Schema({
     reviews: [reviewSchema],
     rating: {
         type: Number,
-        required: true,
         default: 0
     },
     numReviews: {
         type: Number,
-        required: true,
         default: 0
     },
-    sku: {
-        type: String,
+    weight: {
+        type: Number,
         required: true,
+        default: 0,
+    },
+    unit: {
+        type: String,
+        required: true
     },
     price: {
         type: Number,
         required: true,
         default: 0
+    },
+    isActive: {
+        type: Boolean,
+        required: true,
     },
     countInStock: {
         type: Number,
