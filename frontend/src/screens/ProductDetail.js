@@ -36,7 +36,7 @@ const ProductDetail = ({ match, history }) => {
 
                                 <Helmet>
                                     <meta name="og:title" content="Product NTap" data-rh="true" />
-                                    <meta property="og:image" content='https://parsefiles.back4app.com/QbhRDPezDl2gqctMY8HgwWfJXhKfKA4Ct8Q7ocDf/51ccff052174066513a59f395625ea78__feedbackImage_9.jpg' data-rh="true" />
+                                    <meta property="og:image" content={`https://hatti.herokuapp.com${product.image}`} data-rh="true" />
                                 </Helmet>
                                 <Col md={6}>
                                     <Image src={product.image} alt={product.name} fluid />
