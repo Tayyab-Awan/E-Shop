@@ -5,7 +5,7 @@ import asyncHandler from 'express-async-handler';
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({});
+    const products = await Product.find({}).sort({ createdAt: -1 });
     res.json(products);
 })
 
@@ -27,7 +27,6 @@ const getProductById = asyncHandler(async (req, res) => {
 // @route   POST /api/products
 // @access  Private
 const addProduct = asyncHandler(async (req, res) => {
-    console.log('body: ', req.body)
     const {
         name,
         isActive,
@@ -41,7 +40,7 @@ const addProduct = asyncHandler(async (req, res) => {
         image
     } = req.body;
 
-    if (!name || !category || !description || !price || !stock || !weight || !unit) {
+    if (!name || !category || !description || !price || !stock || !weight || !unit || !image) {
         res.status(400);
         throw new Error('All fields are required!');
     }
