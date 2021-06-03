@@ -15,7 +15,7 @@ dotenv.config();
 connectDB();
 const app = express();
 
-const allowedOrigins = ['http://localhost:4500', 'https://tender-lamport-fbc036.netlify.app/l'];
+const allowedOrigins = ['http://localhost:4500', 'https://tender-lamport-fbc036.netlify.app/'];
 
 const corsOptions = {
     origin: allowedOrigins
