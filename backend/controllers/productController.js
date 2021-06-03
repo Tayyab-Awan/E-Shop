@@ -62,6 +62,41 @@ const addProduct = asyncHandler(async (req, res) => {
     res.status(201).json(createdProduct);
 })
 
+// @desc    Edit product
+// @route   PUT /api/products
+// @access  Private
+const editProduct = asyncHandler(async (req, res) => {
+    if (!req.params.id) {
+        res.status(400);
+        throw new Error('Product Id required in url params.');
+    }
+    const updatedProps = req.body;
+
+    let product = await Product.findById(req.params.id);
+    if (product) {
+        product.user = req.user._id,
+        product.name = updatedProps.name,
+        product.brand = updatedProps.brand,
+        product.image = updatedProps.image,
+        product.category = updatedProps.category,
+        product.description = updatedProps.description,
+        product.weight = updatedProps.weight,
+        product.unit = updatedProps.unit,
+        product.price = updatedProps.price,
+        product.isActive = updatedProps.isActive,
+        product.countInStock = updatedProps.stock,
+        product.image = updatedProps.image
+
+        const updatedProduct = await product.save()
+        res.status(201).json(updatedProduct);
+    }
+    else {
+        res.status(404);
+        throw new Error('Product not found')
+    }
+
+})
+
 export {
-    getProducts, getProductById, addProduct
+    getProducts, getProductById, addProduct, editProduct
 }

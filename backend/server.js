@@ -15,7 +15,7 @@ dotenv.config();
 connectDB();
 const app = express();
 
-const allowedOrigins = ['http://localhost:4500'];
+const allowedOrigins = ['http://localhost:4500', 'https://tender-lamport-fbc036.netlify.app/l'];
 
 const corsOptions = {
     origin: allowedOrigins
@@ -32,7 +32,7 @@ app.use('/api/uploads', uploadRoutes);
 app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID));
 
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, '/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 if (process.env.NODE_ENV === 'production') {
     app.use(
